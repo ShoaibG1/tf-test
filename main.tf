@@ -36,7 +36,7 @@ provider "aws" {
 
 variable "hr_hub_etl_postgres_creds" {
   type        = map(any)
-  sensitive   = true
+  sensitive   = true 
   description = "Database credentials for HR Hub ETL Postgres database"
 }
 
