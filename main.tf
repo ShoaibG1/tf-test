@@ -34,10 +34,9 @@ provider "aws" {
   region     = var.region
 }
 
-
-variable "hr_hub_etl_postgres_creds" {  
-  type        = map(any)  
-  sensitive = true  
+variable "hr_hub_etl_postgres_creds" {
+  type        = map(any)
+  sensitive   = true
   description = "Database credentials for HR Hub ETL Postgres database"
 }
 
@@ -48,12 +47,14 @@ resource "aws_secretsmanager_secret" "hr_hub_etl_postgres_creds" {
   tags_all    = {}
 }
 
-resource "aws_secretsmanager_secret_version" "hr_hub_etl_postgres_creds" {  
-   secret_id     = aws_secretsmanager_secret.hr_hub_etl_postgres_creds.id  
-   secret_string = jsonencode(var.hr_hub_etl_postgres_creds)
-   lifecycle {   
-    ignore_changes = [      secret_string    ]  
-   }
+resource "aws_secretsmanager_secret_version" "hr_hub_etl_postgres_creds" {
+  secret_id     = aws_secretsmanager_secret.hr_hub_etl_postgres_creds.id
+  secret_string = jsonencode(var.hr_hub_etl_postgres_creds)
+  lifecycle {
+    ignore_changes = [
+      secret_string
+    ]
+  }
 }
 
 
