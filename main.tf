@@ -28,6 +28,7 @@ terraform {
 variable "region" {}
 
 variable "hr_hub_etl_postgres_creds" {}
+variable "hr_hub_etl_postgres_creds2" {}
 
 # provider arguments call on the variables which then call on terraform.tfvars for the values.
 provider "aws" {
@@ -48,6 +49,23 @@ resource "aws_secretsmanager_secret" "hr_hub_etl_postgres_creds" {
 resource "aws_secretsmanager_secret_version" "hr_hub_etl_postgres_creds" {
   secret_id     = aws_secretsmanager_secret.hr_hub_etl_postgres_creds.id
   secret_string = jsonencode(var.hr_hub_etl_postgres_creds)
+  lifecycle {
+    ignore_changes = [
+      secret_string
+    ]
+  }
+}
+
+resource "aws_secretsmanager_secret" "hr_hub_etl_postgres_creds2" {
+  description = "Credentials to run ETL jobs in HR Hub Postgres database"
+  name        = "npr-hr_hub-etl-postgres-creds2"
+  tags        = {}
+  tags_all    = {}
+}
+
+resource "aws_secretsmanager_secret_version" "hr_hub_etl_postgres_creds2" {
+  secret_id     = aws_secretsmanager_secret.hr_hub_etl_postgres_creds2.id
+  secret_string = jsonencode(var.hr_hub_etl_postgres_creds2)
   lifecycle {
     ignore_changes = [
       secret_string
