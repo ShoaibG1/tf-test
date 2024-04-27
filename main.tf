@@ -34,6 +34,15 @@ provider "aws" {
   region     = var.region
 }
 
+resource "aws_secretsmanager_secret" "example_secret" {
+  name = "example-secret"
+}
+
+resource "aws_secretsmanager_secret_version" "example_secret_version" {
+  secret_id     = aws_secretsmanager_secret.example_secret.id
+  secret_string = var.mysecret1
+}
+
 # Add .gitignore file in this directory with the terraform.tfvars
 
 # resource "aws_instance" "tc_instance" {
