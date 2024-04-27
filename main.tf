@@ -34,14 +34,13 @@ provider "aws" {
   region     = var.region
 }
 
-resource "aws_secretsmanager_secret" "example_secret" {
-  name = "example-secret"
-}
 
-resource "aws_secretsmanager_secret_version" "example_secret_version" {
-  secret_id     = aws_secretsmanager_secret.example_secret.id
-  secret_string = var.mysecret1
-}
+variable "hr_hub_etl_postgres_creds" {  type        = map(any)  sensitive = true  description = "Database credentials for HR Hub ETL Postgres database"}
+
+# aws_secretsmanager_secret.hr-sap-basicauth-credentials:resource "aws_secretsmanager_secret" "hr_hub_etl_postgres_creds" {  description = "Credentials to run ETL jobs in HR Hub Postgres database"  name        = "${var.environment}-hr_hub-etl-postgres-creds"  tags        = {}  tags_all    = {}}
+resource "aws_secretsmanager_secret_version" "hr_hub_etl_postgres_creds" {  secret_id     = aws_secretsmanager_secret.hr_hub_etl_postgres_creds.id  secret_string = jsonencode(var.hr_hub_etl_postgres_creds)
+  lifecycle {    ignore_changes = [      secret_string    ]  }}
+
 
 # Add .gitignore file in this directory with the terraform.tfvars
 
