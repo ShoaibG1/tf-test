@@ -38,7 +38,6 @@ provider "aws" {
 }
 
 
-
 resource "aws_secretsmanager_secret" "hr_hub_etl_postgres_creds" {
   description = "Credentials to run ETL jobs in HR Hub Postgres database"
   name        = "npr-hr_hub-etl-postgres-creds"
