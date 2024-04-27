@@ -42,7 +42,7 @@ variable "hr_hub_etl_postgres_creds" {
 
 resource "aws_secretsmanager_secret" "hr_hub_etl_postgres_creds" {
   description = "Credentials to run ETL jobs in HR Hub Postgres database"
-  name        = "${var.environment}-hr_hub-etl-postgres-creds"
+  name        = "npr-hr_hub-etl-postgres-creds"
   tags        = {}
   tags_all    = {}
 }
